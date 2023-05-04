@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class DialogueControl : MonoBehaviour
 {
@@ -10,8 +11,15 @@ public class DialogueControl : MonoBehaviour
     public float textSpeed;
 
     private int index;
+   
 
-
+    enum TextColor
+    {
+        Blue,
+        Red,
+        Green
+    }
+    [SerializeField] TextColor TxtColor = new TextColor();
 
 
     // Start is called before the first frame update
@@ -24,7 +32,7 @@ public class DialogueControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0)|| Input.GetKey("enter"))
         {
             if(textComponent.text == lines[index])
             {
@@ -65,6 +73,23 @@ public class DialogueControl : MonoBehaviour
         else
         {
             gameObject.SetActive(false);
+        }
+    }
+
+    private void Awake()
+    {
+        textComponent.overrideColorTags = true;
+        if (TxtColor == TextColor.Red)
+        {
+            textComponent.color = new Color32(255, 0, 0, 255);
+        }
+        if (TxtColor == TextColor.Green)
+        {
+            textComponent.color = new Color32(0, 255, 0, 255);
+        }
+        if (TxtColor == TextColor.Blue)
+        {
+            textComponent.color = new Color32(0, 0, 255, 255);
         }
     }
 }
